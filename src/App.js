@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, createContext } from "react";
+
+import SecondComponent from "./SecondCoponent";
+
+// Create context
+export const BackgroundContext = createContext()
 
 function App() {
+
+  const [background, setBackgorund] = useState("Light");
+
+  const backgroundHandle = () => {
+    setBackgorund(background === "Light" ? "Dark" : "Light");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BackgroundContext.Provider value={background}> {/* Create provider to send value */}
+      <div className="App">
+        <div className="NormalWay">
+          <h2>This is the way using useContext</h2>
+          <button onClick={backgroundHandle}>Change background</button>
+          <SecondComponent/>
+        </div>
+      </div>
+    </BackgroundContext.Provider>
   );
 }
 
